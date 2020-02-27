@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRouteMatch, useHistory } from 'react-router-dom';
+import { useRouteMatch, useHistory, useParams } from 'react-router-dom';
 import MovieCard from './MovieCard';
-import UpdateMovie from "./UpdateMovie";
+import Button from '@material-ui/core/Button';
+
 
 function Movie({ addToSavedList }) {
   const [movie, setMovie] = useState();
   const match = useRouteMatch();
   const history = useHistory();
+  const { id } = useParams();
   
  
   const fetchMovie = id => {
@@ -21,13 +23,21 @@ function Movie({ addToSavedList }) {
     addToSavedList(movie);
   };
 
- 
   const handleUpdate = e => {
     e.preventDefault();
-    
-    
     history.push(`/update-movie/${movie.id}`);
  };
+
+ const handleDelete = e => {
+  e.preventDefault();
+  axios
+    .delete(`http://localhost:5000/api/movies/${id}`)
+    .then(res => {
+      setMovie(res.data);
+      history.push('/');
+    })
+    .catch(err => console.log(err));
+};
 
 
 
@@ -46,7 +56,8 @@ function Movie({ addToSavedList }) {
       <div className='save-button' onClick={saveMovie}>
         Save
       </div>
-      <button onClick={handleUpdate}>Update Movie</button>
+      <Button variant="contained" color="primary" onClick={handleUpdate}>Update Movie</Button>
+      <Button className="button" variant="contained" color="secondary" onClick={handleDelete}>Delete Movie</Button>
     </div>
   );
 }

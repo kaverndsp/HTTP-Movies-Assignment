@@ -21,9 +21,12 @@ const App = () => {
     setSavedList([...savedList, movie]);
   };
 
-  useEffect(() => {
-    getMovieList();
-  }, []);
+    //calls immediately so when user updates movie info it will rerender on page when submit is redirected to home page
+    useEffect(() => {
+      setTimeout(() => {
+       getMovieList();
+      }, 1000);
+      }, [])
 
   return (
     <>

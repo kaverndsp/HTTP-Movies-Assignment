@@ -75,3 +75,14 @@ body {
   color: red;
   text-align: center;
 }
+
+.form-container{
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0% 35%;
+}
+
+.form-content{
+  margin: 1% 0%;
+}

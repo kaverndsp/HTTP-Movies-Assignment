@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import SavedList from "./Movies/SavedList";
 import MovieList from "./Movies/MovieList";
 import Movie from "./Movies/Movie";
+import UpdateMovie from "./Movies/UpdateMovie";
 import axios from 'axios';
 
 const App = () => {
@@ -20,9 +21,12 @@ const App = () => {
     setSavedList([...savedList, movie]);
   };
 
-  useEffect(() => {
-    getMovieList();
-  }, []);
+    //calls immediately so when user updates movie info it will rerender on page when submit is redirected to home page
+    useEffect(() => {
+      setTimeout(() => {
+       getMovieList();
+      }, 1000);
+      }, [])
 
   return (
     <>
@@ -33,8 +37,11 @@ const App = () => {
       </Route>
 
       <Route path="/movies/:id">
-        <Movie addToSavedList={addToSavedList} />
+        <Movie addToSavedList={addToSavedList} movie={movieList} />
       </Route>
+      <Route path="/update-movie/:id" component={UpdateMovie}/>
+        
+      
     </>
   );
 };
